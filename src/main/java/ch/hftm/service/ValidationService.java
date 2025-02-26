@@ -16,8 +16,8 @@ public class ValidationService {
     @Outgoing("validation-response")
     public Multi<ValidationResponse> validateTextMessages(Multi<ValidationRequest> requests) {
         return requests.onItem().transform(request -> {
-            boolean valid = !request.text().contains("hftm sucks");
-            LOG.debug("Text-Validation: " + request.text() + " -> " + valid);
+            boolean valid = request.text() != null && !request.text().toLowerCase().contains("hftm sucks");
+            LOG.debugf("Text-Validation: '%s' -> %b", request.text(), valid);
             return new ValidationResponse(request.id(), valid);
         });
     }
