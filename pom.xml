@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>ch.hftm</groupId>
     <artifactId>quarkus-service-2</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <properties>
-        <compiler-plugin.version>3.13.0</compiler-plugin.version>
         <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>3.18.4</quarkus.platform.version>
-        <skipITs>true</skipITs>
+        <quarkus.platform.version>3.18.4</quarkus.platform.version> <!-- Stabile Version -->
         <surefire-plugin.version>3.5.2</surefire-plugin.version>
-        <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
+        <org.mapstruct.version>1.6.3</org.mapstruct.version>
     </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/davidoetterli/quarkus-service-2</url>
+        </repository>
+    </distributionManagement>
 
     <dependencyManagement>
         <dependencies>
@@ -33,14 +38,10 @@
     </dependencyManagement>
 
     <dependencies>
-
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-messaging-kafka</artifactId>
-            <version>3.18.1</version>
         </dependency>
-
-
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest-jsonb</artifactId>
@@ -65,7 +66,10 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-openapi</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/io.quarkus/quarkus-hibernate-validator -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-hibernate-validator</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5</artifactId>
@@ -81,10 +85,6 @@
             <artifactId>lombok</artifactId>
             <version>1.18.32</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-hibernate-validator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -106,30 +106,21 @@
                             <goal>build</goal>
                             <goal>generate-code</goal>
                             <goal>generate-code-tests</goal>
-                            <goal>native-image-agent</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
-            <!--            <plugin>-->
-            <!--                <artifactId>maven-compiler-plugin</artifactId>-->
-            <!--                <version>${compiler-plugin.version}</version>-->
-            <!--                <configuration>-->
-            <!--                    <compilerArgs>-->
-            <!--                        <arg>-parameters</arg>-->
-            <!--                    </compilerArgs>-->
-            <!--                </configuration>-->
-            <!--            </plugin>-->
+
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
                 <configuration>
                     <systemPropertyVariables>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-                        <maven.home>${maven.home}</maven.home>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
+
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
@@ -143,20 +134,18 @@
                 </executions>
                 <configuration>
                     <systemPropertyVariables>
-                        <native.image.path>
-                            ${project.build.directory}/${project.build.finalName}-runner</native.image.path>
-                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-                        <maven.home>${maven.home}</maven.home>
+                        <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>1.8</source> <!-- depending on your project -->
-                    <target>1.8</target> <!-- depending on your project -->
+                    <source>17</source>
+                    <target>17</target>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
@@ -168,7 +157,6 @@
                             <artifactId>mapstruct-processor</artifactId>
                             <version>${org.mapstruct.version}</version>
                         </path>
-                        <!-- other annotation processors -->
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
@@ -184,7 +172,6 @@
                 </property>
             </activation>
             <properties>
-                <skipITs>false</skipITs>
                 <quarkus.native.enabled>true</quarkus.native.enabled>
             </properties>
         </profile>

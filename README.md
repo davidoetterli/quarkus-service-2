@@ -1,62 +1,81 @@
-# quarkus-service-2
+# Quarkus Microservices Projekt
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Dieses Projekt besteht aus zwei Quarkus-Services, die über Kafka miteinander kommunizieren.
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+## 📌 Voraussetzungen
 
-## Running the application in dev mode
+Bevor du die Services startest, stelle sicher, dass folgende Voraussetzungen erfüllt sind:
 
-You can run your application in dev mode that enables live coding using:
+- **Java 17 oder höher** ist installiert
+- **Maven** ist installiert
+- **Docker** ist installiert und läuft (für Kafka und die Datenbank erforderlich)
 
-```shell script
+## 📦 Projektübersicht
+
+- **quarkus-service-1**: Stellt eine REST API bereit, um Blog-Posts zu erstellen und sendet eine Validierungsanfrage an Kafka.
+- **quarkus-service-2**: Hört auf die Validierungsanfragen, verarbeitet sie und sendet eine Antwort zurück.
+
+## 🚀 Services starten
+
+### 1️⃣ Starte Kafka & MySQL mit Docker
+
+Falls du Kafka und MySQL nicht lokal installiert hast, kannst du sie mit Docker starten:
+
+```sh
+# Starte Kafka mit Docker
+docker-compose up -d
+```
+
+Falls du kein `docker-compose.yml` hast, erstelle einen oder installiere Kafka manuell.
+
+### 2️⃣ Starte `quarkus-service-1`
+
+Öffne ein Terminal und navigiere in das Verzeichnis des ersten Services:
+
+```sh
+cd quarkus-service-1
 ./mvnw quarkus:dev
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+### 3️⃣ Starte `quarkus-service-2`
 
-## Packaging and running the application
+Öffne ein weiteres Terminal und navigiere in das Verzeichnis des zweiten Services:
 
-The application can be packaged using:
-
-```shell script
-./mvnw package
+```sh
+cd quarkus-service-2
+./mvnw quarkus:dev
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+### 4️⃣ Teste die Services
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+Sobald beide Services laufen, kannst du einen Blog-Post erstellen und die Validierung testen.
 
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
+#### Blog-Post erstellen:
+```sh
+curl -X POST "http://localhost:8080/blog" \
+     -H "Content-Type: application/json" \
+     -d '{"title": "Mein Blogpost", "content": "Dies ist ein Test"}'
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+Der `quarkus-service-1` sendet eine Validierungsanfrage an Kafka, und `quarkus-service-2` verarbeitet sie.
 
-## Creating a native executable
+### 5️⃣ Logs und Debugging
+Falls es Probleme gibt, überprüfe die Logs beider Services.
 
-You can create a native executable using:
+- **Für `quarkus-service-1`**:
+  ```sh
+  tail -f quarkus-service-1/logs/quarkus.log
+  ```
+- **Für `quarkus-service-2`**:
+  ```sh
+  tail -f quarkus-service-2/logs/quarkus.log
+  ```
 
-```shell script
-./mvnw package -Dnative
+Falls Docker nicht richtig läuft, stelle sicher, dass der `Kafka`- und `MySQL`-Container aktiv sind:
+```sh
+docker ps
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+## ✅ Fertig!
 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/quarkus-service-2-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Provided Code
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+Wenn alles erfolgreich läuft, hast du zwei Quarkus-Services, die über Kafka kommunizieren und Blogposts validieren.
