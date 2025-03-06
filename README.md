@@ -42,15 +42,13 @@ git clone git@github.com:davidoetterli/quarkus-service-2.git
 2. **Kafka (Redpanda) starten**
 
    ```sh
-   docker run -d --name=redpanda-1 -p 9092:9092 --network blog-nw \
-      docker.redpanda.com/redpandadata/redpanda:v23.3.5 redpanda start --advertise-kafka-addr redpanda-1:9092
+   docker run -d --name=redpanda-1 -p 9092:9092 --network blog-nw docker.redpanda.com/redpandadata/redpanda:v23.3.5 redpanda start --advertise-kafka-addr redpanda-1:9092
    ```
 
 3. **MySQL-Datenbank starten**
 
    ```sh
-   docker run --name mysql-db --network blog-nw -e MYSQL_ROOT_PASSWORD=test05 -e MYSQL_DATABASE=blog-db \
-      -p 3306:3306 -d mysql:8
+   docker run --name mysql-db --network blog-nw -e MYSQL_ROOT_PASSWORD=test05 -e MYSQL_DATABASE=blog-db -p 3306:3306 -d mysql:8
    ```
 
 4. **quarkus-service-1 starten**
@@ -66,12 +64,20 @@ git clone git@github.com:davidoetterli/quarkus-service-2.git
    ```
 
 ## Nutzung
-
+Evt. muss man diese Befehle in verschiedenen Terminals versuchen. (Shell, PowerShell, ect.)
+Ansonsten mit Postman arbeiten und auf "localhost:8080/blog" anfragen (POST & GET) senden.
+Das Schema zu Post sieht wie folgt aus:
+```
+{
+    "title": "This is my Blog",
+    "content": "David is the best"
+}
+```
 1. **Einen neuen Blog-Eintrag erstellen**
 
-   ```sh
-   curl -X POST "http://localhost:8080/blog" -H "Content-Type: application/json" -d '{"title":"Test Blog", "content":"Dies ist ein Test"}'
-   ```
+    ```sh
+    curl --location "http://localhost:8080/blog" --header "Content-Type: application/json" --data "{\"title\":\"This is my Blog\",\"content\":\"David is the best\"}"
+    ```
 
 2. **Alle Blog-Einträge abrufen**
 
@@ -82,4 +88,3 @@ git clone git@github.com:davidoetterli/quarkus-service-2.git
 ## Lizenz
 
 Dieses Projekt steht unter der MIT-Lizenz.
-
