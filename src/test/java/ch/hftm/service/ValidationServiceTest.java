@@ -14,7 +14,7 @@ public class ValidationServiceTest {
 
     @Test
     public void testValidText() {
-        // Ein Text, der guet ist
+        // Ein Text, der gut ist
         ValidationRequest request = new ValidationRequest(1L, "Das ist ein guter Test");
         Multi<ValidationResponse> responseMulti = validationService.validateTextMessages(Multi.createFrom().item(request));
         ValidationResponse response = responseMulti.toUni().await().indefinitely();
@@ -23,7 +23,7 @@ public class ValidationServiceTest {
 
     @Test
     public void testInvalidText() {
-        // Ein Text, der den verbotenen Ausdruck enthaelt
+        // Ein Text, der den verbotenen Ausdruck enthält
         ValidationRequest request = new ValidationRequest(2L, "HFTM sucks in allen Fällen");
         Multi<ValidationResponse> responseMulti = validationService.validateTextMessages(Multi.createFrom().item(request));
         ValidationResponse response = responseMulti.toUni().await().indefinitely();

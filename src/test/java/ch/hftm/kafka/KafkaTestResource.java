@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class KafkaTestResource implements QuarkusTestResourceLifecycleManager {
 
-    public static String bootstrapServers;  // Statische Variable fuer den Zugriff im Test
+    public static String bootstrapServers;  // Statische Variable für den Zugriff im Test
     private KafkaContainer kafkaContainer;
 
     @Override

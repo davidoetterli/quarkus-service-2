@@ -31,7 +31,7 @@ public class KafkaIntegrationIT {
         producerProps.put("value.serializer", StringSerializer.class.getName());
         KafkaProducer<String, String> producer = new KafkaProducer<>(producerProps);
 
-        // Sende eine JSON-Nachricht, die einen gueltigen Validierungsfall repraesentiert
+        // Sende eine JSON-Nachricht, die einen gültigen Validierungsfall repräsentiert
         String requestJson = "{\"id\":100, \"text\":\"Das ist ein Test ohne verbotene Inhalte\"}";
         ProducerRecord<String, String> record = new ProducerRecord<>("validation-request", requestJson);
         producer.send(record);
@@ -60,6 +60,6 @@ public class KafkaIntegrationIT {
             }
         }
         consumer.close();
-        Assertions.assertTrue(messageReceived, "Es wurde keine gueltige Antwort im Topic 'validation-response' empfangen.");
+        Assertions.assertTrue(messageReceived, "Es wurde keine gültige Antwort im Topic 'validation-response' empfangen.");
     }
 }

@@ -14,7 +14,7 @@ public class KafkaSerializationTest {
         ValidationResponseSerializer serializer = new ValidationResponseSerializer();
         byte[] serialized = serializer.serialize(null, response);
         String jsonString = new String(serialized);
-        // Ueberpruefung, ob das JSON die erwarteten Felder enthaelt
+        // Überprüfung, ob das JSON die erwarteten Felder enthält
         assertTrue(jsonString.contains("\"id\":123"));
         assertTrue(jsonString.contains("\"valid\":true"));
     }
