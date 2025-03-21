@@ -16,10 +16,17 @@ import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
 
+/**
+ * Integrationstest für Kafka.
+ */
 @QuarkusIntegrationTest
 @QuarkusTestResource(KafkaTestResource.class)
 public class KafkaIntegrationIT {
 
+
+    /**
+     * Testet die Kafka-Integration.
+     */
     @Test
     public void testKafkaIntegration() {
         String bootstrapServers = KafkaTestResource.bootstrapServers;

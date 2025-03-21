@@ -6,8 +6,16 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testet die Serialisierung und Deserialisierung.
+ */
 public class KafkaSerializationTest {
 
+    /**
+     * Testet die Serialisierung von ValidationResponse.
+     *
+     * @throws Exception falls ein Fehler auftritt
+     */
     @Test
     public void testValidationResponseSerialization() throws Exception {
         ValidationResponse response = new ValidationResponse(123L, true);
@@ -19,6 +27,11 @@ public class KafkaSerializationTest {
         assertTrue(jsonString.contains("\"valid\":true"));
     }
 
+    /**
+     * Testet die Deserialisierung von ValidationRequest.
+     *
+     * @throws Exception falls ein Fehler auftritt
+     */
     @Test
     public void testValidationRequestDeserialization() throws Exception {
         String jsonString = "{\"id\":456,\"text\":\"Testmessage\"}";

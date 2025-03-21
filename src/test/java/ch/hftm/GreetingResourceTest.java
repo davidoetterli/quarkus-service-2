@@ -1,15 +1,20 @@
 package ch.hftm;
 
 import io.quarkus.test.junit.QuarkusTest;
-import io.restassured.RestAssured;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
+/**
+ * Unit-Test für die GreetingResource.
+ */
 @QuarkusTest
 public class GreetingResourceTest {
 
+    /**
+     * Testet den Hello-Endpoint.
+     */
     @Test
     public void testHelloEndpoint() {
         given()

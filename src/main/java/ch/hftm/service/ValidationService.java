@@ -8,10 +8,23 @@ import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import org.jboss.logging.Logger;
 
+/**
+ * Service zur Validierung von Textnachrichten.
+ * Diese Klasse ist nicht zur Erweiterung vorgesehen.
+ */
 @ApplicationScoped
 public class ValidationService {
+    /**
+     * Logger für die Validierung.
+     */
     private static final Logger LOG = Logger.getLogger(ValidationService.class);
 
+    /**
+     * Validiert die eingehenden Textnachrichten.
+     *
+     * @param requests der eingehende Stream von {@code ValidationRequest} Objekten
+     * @return ein Multi-Stream von {@code ValidationResponse} Objekten
+     */
     @Incoming("validation-request")
     @Outgoing("validation-response")
     public Multi<ValidationResponse> validateTextMessages(Multi<ValidationRequest> requests) {
