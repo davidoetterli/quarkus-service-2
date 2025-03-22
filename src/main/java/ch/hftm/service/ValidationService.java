@@ -1,3 +1,7 @@
+/**
+ * Enthält Services für die Validierung und weitere
+ * Geschäftslogiken.
+ */
 package ch.hftm.service;
 
 import ch.hftm.dto.ValidationRequest;

@@ -1,3 +1,6 @@
+/**
+ * Enthält die Data Transfer Objects (DTOs) für die Validierung.
+ */
 package ch.hftm.dto;
 
 /**

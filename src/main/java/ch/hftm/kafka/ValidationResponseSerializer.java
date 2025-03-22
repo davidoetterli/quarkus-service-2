@@ -1,3 +1,7 @@
+/**
+ * Enthält Klassen für die Serialisierung und Deserialisierung sowie
+ * Kafka-spezifische Tests und Ressourcen.
+ */
 package ch.hftm.kafka;
 
 import ch.hftm.dto.ValidationResponse;

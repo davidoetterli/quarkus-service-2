@@ -1,3 +1,6 @@
+/**
+ * Enthält REST-Ressourcen.
+ */
 package ch.hftm;
 
 import jakarta.ws.rs.GET;
