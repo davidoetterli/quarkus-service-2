@@ -1,3 +1,6 @@
+/**
+ * Enthält Tests der REST-Ressourcen.
+ */
 package ch.hftm;
 
 import io.quarkus.test.junit.QuarkusTest;

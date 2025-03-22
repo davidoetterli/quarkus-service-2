@@ -1,3 +1,7 @@
+/**
+ * Enthält Integrationstests, Serialisierungs‑/Deserialisierungs‑Tests und
+ * Testressourcen für Kafka.
+ */
 package ch.hftm.kafka;
 
 import ch.hftm.dto.ValidationRequest;

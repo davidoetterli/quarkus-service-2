@@ -1,3 +1,6 @@
+/**
+ * Enthält Tests für Services und Geschäftslogiken.
+ */
 package ch.hftm.service;
 
 import ch.hftm.dto.ValidationRequest;
