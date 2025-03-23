@@ -3,7 +3,7 @@ name: Publish Docker Image
 # Dieser Workflow wird nach Abschluss des "Build Package"-Workflows gestartet.
 on:
   workflow_run:
-    workflows: [ "Build Package" ]
+    workflows: [ "Run Tests" ]
     types:
       - completed
 
