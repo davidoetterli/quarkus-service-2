@@ -19,7 +19,7 @@
 
         <!-- Regel für Javadoc bei öffentlichen Methoden -->
         <module name="JavadocMethod">
-            <property name="scope" value="public"/>
+            <property name="accessModifiers" value="public"/>
         </module>
     </module>
 </module>
