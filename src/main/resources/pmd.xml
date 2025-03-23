@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Custom Ruleset for quarkus-service-2"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.github.io/pmd-6.42.0/pmd_ruleset_2_0_0.xsd">
+
+    <description>
+        Diese Regeldatei enthält eine Auswahl von PMD-Regeln für das quarkus-service-2 Projekt.
+    </description>
+
+    <!-- Globale Ausschlüsse -->
+    <exclude-pattern>ch\.hftm\.GreetingResource</exclude-pattern>
+    <exclude-pattern>ch\.hftm\.service\.ValidationService</exclude-pattern>
+
+    <!-- Einbindung von Standard-Regelkategorien -->
+    <rule ref="category/java/bestpractices.xml"/>
+    <rule ref="category/java/codestyle.xml"/>
+    <rule ref="category/java/design.xml"/>
+    <rule ref="category/java/errorprone.xml"/>
+    <rule ref="category/java/performance.xml"/>
+    <rule ref="category/java/security.xml"/>
+
+    <!-- Beispiel: Eigene Regel für leere Catch-Blöcke -->
+    <rule name="EmptyCatchBlock"
+          language="java"
+          message="Vermeide leere Catch-Blöcke; logge den Fehler oder wirf eine Exception."
+          class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+            Leere Catch-Blöcke können Fehler verbergen.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="version" value="2.0"/>
+            <property name="xpath" value="//CatchStatement[Block/BlockStatement/Statement[count(*)=0] and not(Block/BlockStatement/Statement[PrimaryExpression/PrimaryPrefix/Name='log'])]"/>
+        </properties>
+    </rule>
+</ruleset>
