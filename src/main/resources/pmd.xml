@@ -5,7 +5,7 @@
         This ruleset contains a selection of PMD rules for the quarkus-service-2 project.
     </description>
 
-    <!-- Example: Rule to avoid empty catch blocks -->
+    <!-- Regel, um leere catch-Blöcke zu vermeiden -->
     <rule ref="category/java/errorprone.xml/EmptyCatchBlock">
         <properties>
             <property name="allowCommentedBlocks" value="false"/>
@@ -13,4 +13,12 @@
         </properties>
     </rule>
 
+    <!-- Regel, um unbenutzte lokale Variablen zu finden -->
+    <rule ref="category/java/bestpractices.xml/UnusedLocalVariable"/>
+
+    <!-- Regel, um die Instanziierung von Objekten in Schleifen zu vermeiden -->
+    <rule ref="category/java/performance.xml/AvoidInstantiatingObjectsInLoops"/>
+
+    <!-- Regel, um das Abfangen von NullPointerExceptions zu vermeiden -->
+    <rule ref="category/java/errorprone.xml/AvoidCatchingNPE"/>
 </ruleset>
