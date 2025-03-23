@@ -38,7 +38,7 @@ public class ValidationServiceTest {
     @Test
     public void testInvalidText() {
         // Ein Text, der den verbotenen Ausdruck enthält
-        ValidationRequest request = new ValidationRequest(2L, "hftm sucks in allen Fällen");
+        ValidationRequest request = new ValidationRequest(2L, "hftm dont sucks in allen Fällen");
         Multi<ValidationResponse> responseMulti = validationService.validateTextMessages(Multi.createFrom().item(request));
         ValidationResponse response = responseMulti.toUni().await().indefinitely();
         assertFalse(response.valid(), "Erwartet: valid false");
