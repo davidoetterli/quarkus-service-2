@@ -43,7 +43,7 @@ public class KafkaIntegrationIT {
         KafkaProducer<String, String> producer = new KafkaProducer<>(producerProps);
 
         // Sende eine JSON-Nachricht, die einen gültigen Validierungsfall repräsentiert
-        String requestJson = "{\"id\":100, \"text\":\"Das ist ein Test ohne verbotene Inhalte\"}";
+        String requestJson = "{\"identifier\":100, \"text\":\"Das ist ein Test ohne verbotene Inhalte\"}";
         ProducerRecord<String, String> record = new ProducerRecord<>("validation-request", requestJson);
         producer.send(record);
         producer.close();
@@ -64,7 +64,7 @@ public class KafkaIntegrationIT {
         while (System.currentTimeMillis() < timeout && !messageReceived) {
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(500));
             for (ConsumerRecord<String, String> rec : records) {
-                if (rec.value().contains("\"id\":100") && rec.value().contains("\"valid\":true")) {
+                if (rec.value().contains("\"identifier\":100") && rec.value().contains("\"valid\":true")) {
                     messageReceived = true;
                     break;
                 }

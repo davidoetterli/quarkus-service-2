@@ -27,7 +27,7 @@ public class KafkaSerializationTest {
         byte[] serialized = serializer.serialize(null, response);
         String jsonString = new String(serialized);
         // Überprüfung, ob das JSON die erwarteten Felder enthält
-        assertTrue(jsonString.contains("\"id\":123"));
+        assertTrue(jsonString.contains("\"identifier\":123"));
         assertTrue(jsonString.contains("\"valid\":true"));
     }
 
@@ -38,11 +38,11 @@ public class KafkaSerializationTest {
      */
     @Test
     public void testValidationRequestDeserialization() throws Exception {
-        String jsonString = "{\"id\":456,\"text\":\"Testmessage\"}";
+        String jsonString = "{\"identifier\":456,\"text\":\"Testmessage\"}";
         byte[] bytes = jsonString.getBytes();
         ValidationRequestDeserializer deserializer = new ValidationRequestDeserializer();
         ValidationRequest request = deserializer.deserialize(null, bytes);
-        assertEquals(456L, request.id());
+        assertEquals(456L, request.identifier());
         assertEquals("Testmessage", request.text());
     }
 }

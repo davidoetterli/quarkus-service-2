@@ -163,12 +163,16 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.5.0</version>
                 <configuration>
+                    <!-- Der Pfad zu deiner Checkstyle-Konfigurationsdatei -->
                     <configLocation>src/main/resources/checkstyle.xml</configLocation>
+                    <!-- Ausgabe im Konsolenlog -->
                     <consoleOutput>true</consoleOutput>
+                    <!-- Maven-Build schlägt fehl, wenn Checkstyle-Fehler gefunden werden -->
                     <failsOnError>true</failsOnError>
                 </configuration>
                 <executions>
                     <execution>
+                        <!-- Der Check wird in der Phase 'verify' ausgeführt -->
                         <phase>verify</phase>
                         <goals>
                             <goal>check</goal>
@@ -179,13 +183,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.15.0</version>
+                <version>3.26.0</version>
                 <configuration>
                     <rulesets>
                         <ruleset>src/main/resources/pmd.xml</ruleset>
                     </rulesets>
-                    <printFailingErrors>true</printFailingErrors>
-                    <linkXRef>false</linkXRef>
                 </configuration>
                 <executions>
                     <execution>

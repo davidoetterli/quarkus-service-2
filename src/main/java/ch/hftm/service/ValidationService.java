@@ -1,7 +1,3 @@
-/**
- * Enthält Services für die Validierung und weitere
- * Geschäftslogiken.
- */
 package ch.hftm.service;
 
 import ch.hftm.dto.ValidationRequest;
@@ -12,12 +8,14 @@ import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import org.jboss.logging.Logger;
 
+import java.util.Locale;
+
 /**
  * Service zur Validierung von Textnachrichten.
  * Diese Klasse ist nicht zur Erweiterung vorgesehen.
  */
 @ApplicationScoped
-public class ValidationService {
+public final class ValidationService {
     /**
      * Logger für die Validierung.
      */
@@ -31,11 +29,19 @@ public class ValidationService {
      */
     @Incoming("validation-request")
     @Outgoing("validation-response")
-    public Multi<ValidationResponse> validateTextMessages(Multi<ValidationRequest> requests) {
+    public Multi<ValidationResponse> validateTextMessages(final Multi<ValidationRequest> requests) {
         return requests.onItem().transform(request -> {
-            boolean valid = request.text() != null && !request.text().toLowerCase().contains("fuuck");
-            LOG.debugf("Text-Validation: '%s' -> %b", request.text(), valid);
-            return new ValidationResponse(request.id(), valid);
+            final String text = request.text();
+            final String lowerText;
+            if (text != null) {
+                lowerText = text.toLowerCase(Locale.ROOT);
+            } else {
+                lowerText = "";
+            }
+            final boolean valid = (text != null) && (!lowerText.contains("hftm sucks"));
+            LOG.debugf("Text-Validation: '%s' -> %b", text, valid);
+            final long identifier = request.identifier();
+            return new ValidationResponse(identifier, valid);
         });
     }
 }
