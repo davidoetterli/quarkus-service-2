@@ -1,5 +1,6 @@
 name: Run Tests
 
+# Dieser Workflow wird bei jedem Push oder Pull Request auf den main-Branch gestartet.
 on:
   push:
     branches: [ main ]
@@ -11,15 +12,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
+        # Checkt den Code aus dem Repository aus.
         uses: actions/checkout@v3
 
       - name: Set up JDK 17
+        # Richtet die Java-Umgebung (JDK 17) ein.
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
 
       - name: Cache Maven packages
+        # Cacht die Maven-Abhängigkeiten, um den Build-Prozess zu beschleunigen.
         uses: actions/cache@v3
         with:
           path: ~/.m2
@@ -27,7 +31,9 @@ jobs:
           restore-keys: ${{ runner.os }}-maven
 
       - name: Run Tests
+        # Führt die Tests aus und prüft, ob der Code funktioniert.
         run: mvn clean verify
+
 
       # Falls die tests fehlschlagen, kann man so ein mail verschicken.
 #      - name: Send Email on Failure

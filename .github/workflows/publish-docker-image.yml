@@ -1,5 +1,6 @@
 name: Publish Docker Image
 
+# Dieser Workflow wird nach Abschluss des "Build Package"-Workflows gestartet.
 on:
   workflow_run:
     workflows: [ "Build Package" ]
@@ -8,6 +9,7 @@ on:
 
 jobs:
   build-and-publish:
+    # Der Job wird nur ausgeführt, wenn der Build Package-Workflow erfolgreich abgeschlossen wurde.
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:
@@ -17,24 +19,29 @@ jobs:
       id-token: write
     steps:
       - name: Checkout Repository
+        # Checkt den Code aus dem Repository aus.
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
+        # Richtet die Java-Umgebung (JDK 17) ein.
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
 
       - name: Build with Maven
+        # Baut das Maven-Projekt; Tests werden übersprungen.
         run: mvn clean package -DskipTests
 
       - name: Log in to Docker Hub
+        # Meldet sich bei Docker Hub an, um Images pushen zu können.
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Log in to GitHub Container Registry
+        # Meldet sich beim GitHub Container Registry an.
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -42,6 +49,7 @@ jobs:
           password: ${{ secrets.TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
+        # Extrahiert Metadaten wie Tags und Labels, die für das Docker-Image verwendet werden.
         id: meta
         uses: docker/metadata-action@v4
         with:
@@ -50,6 +58,7 @@ jobs:
             ghcr.io/${{ github.repository }}
 
       - name: Build and push Docker images
+        # Baut das Docker-Image und pusht es in die entsprechenden Registries.
         id: push
         uses: docker/build-push-action@v4
         with:
@@ -60,6 +69,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Generate artifact attestation
+        # Generiert eine Build-Provenance, welche als Nachweis des Build-Artefakts dient.
         uses: actions/attest-build-provenance@v2
         with:
           subject-name: ghcr.io/${{ github.repository }}
