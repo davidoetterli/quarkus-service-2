@@ -33,7 +33,7 @@ public class ValidationService {
     @Outgoing("validation-response")
     public Multi<ValidationResponse> validateTextMessages(Multi<ValidationRequest> requests) {
         return requests.onItem().transform(request -> {
-            boolean valid = request.text() != null && !request.text().toLowerCase().contains("hftm is bad");
+            boolean valid = request.text() != null && !request.text().toLowerCase().contains("fuuck");
             LOG.debugf("Text-Validation: '%s' -> %b", request.text(), valid);
             return new ValidationResponse(request.id(), valid);
         });
